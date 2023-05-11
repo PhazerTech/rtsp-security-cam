@@ -16,7 +16,7 @@ Next, clone this repository:
 git clone https://github.com/PhazerTech/rtsp-security-cam
 ```
 
-Now install the required dependencies:
+Now install the required dependencies with pip:
 
 ```bash
 cd rtsp-security-cam
