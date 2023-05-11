@@ -47,11 +47,11 @@ that helps to find the optimal threshold value.
 
 --threshold - Threshold value determines the amount of motion required to trigger a recording. Higher values decrease sensitivity to help reduce false positives. Default is 350. Max is 10000.
 
---start_frames - Number of consecutive frames with motion activity required to start a recording. This value will depend on your stream's FPS and desired sensitivity. Raising this value might help if there's too many false positive recordings. Default is 3. Max is 30.
+--start_frames - The number of consecutive frames with motion activity required to start a recording. Raising this value might help if there's too many false positive recordings, especially when using a high frame rate stream greater than 30 FPS. Default is 3. Max is 30.
 
---tail_length - Number of seconds without motion activity required to stop a recording. Raising this value might help if the recordings are stopping too early. Default is 8. Max is 30.
+--tail_length - The number of seconds without motion activity required to stop a recording. Raising this value might help if the recordings are stopping too early. Default is 8. Max is 30.
 
---no_auto_delete - Recordings that have a total length close to the tail_length value are assumed to be false positives and are auto-deleted by default. Entering this argument disables the auto-delete feature.
+--auto_delete - Entering this argument enables the auto-delete feature. Recordings that have a total length equal to the tail_length value are assumed to be false positives and are auto-deleted.
 
 --testing - Testing mode disables recordings and prints out the motion value for each frame if greater than threshold. Helps fine tune the threshold value.
 

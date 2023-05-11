@@ -19,13 +19,13 @@ from sshkeyboard import listen_keyboard, stop_listening
 # Parse command line arguments
 parser = ArgumentParser(formatter_class=ArgumentDefaultsHelpFormatter)
 parser.add_argument("--stream", type=str, help="RTSP address of video stream.")
-parser.add_argument('--monitor', default=False, action=BooleanOptionalAction, help="View the live stream while program is running. If no monitor is connected then leave this disabled.")
+parser.add_argument('--monitor', default=False, action=BooleanOptionalAction, help="View the live stream while program is running. If no monitor is connected then leave this disabled (no Raspberry Pi SSH sessions).")
 parser.add_argument("--threshold", default=350, type=int, choices=range(1,10000), help="Threshold value determines the amount of motion required to trigger a recording. Higher values decrease sensitivity to help reduce false positives. Default is 350. Max is 10000.")
-parser.add_argument("--start_frames", default=3, type=int, choices=range(1,30), help="Number of consecutive frames with motion activity required to start a recording. This value will depend on your stream's FPS and desired sensitivity. Raising this value might help if there's too many false positive recordings. Default is 3. Max is 30.")
-parser.add_argument("--tail_length", default=8, type=int, choices=range(1,30), help="Number of seconds without motion activity required to stop a recording. Raising this value might help if the recordings are stopping too early. Default is 8. Max is 30.")
-parser.add_argument("--no_auto_delete", default=False, action=BooleanOptionalAction, help="Recordings that have a total length close to the tail_length value are assumed to be false positives and are auto-deleted by default. Entering this argument disables the auto-delete feature.")
-parser.add_argument('--testing', default=False, action=BooleanOptionalAction, help="Testing mode disables recordings and prints out motion value if greater than threshold. Helps fine tune the threshold value.")
-parser.add_argument('--frame_click', default=False, action=BooleanOptionalAction, help="Allows user to advance frames one by one by pressing any key. For use with testing mode on video files, not live streams.")
+parser.add_argument("--start_frames", default=3, type=int, choices=range(1,30), help="The number of consecutive frames with motion activity required to start a recording. Raising this value might help if there's too many false positive recordings, especially when using a high frame rate stream greater than 30 FPS. Default is 3. Max is 30.")
+parser.add_argument("--tail_length", default=8, type=int, choices=range(1,30), help="The number of seconds without motion activity required to stop a recording. Raising this value might help if the recordings are stopping too early. Default is 8. Max is 30.")
+parser.add_argument("--auto_delete", default=False, action=BooleanOptionalAction, help="Entering this argument enables the auto-delete feature. Recordings that have a total length equal to the tail_length value are assumed to be false positives and are auto-deleted.")
+parser.add_argument('--testing', default=False, action=BooleanOptionalAction, help="Testing mode disables recordings and prints out the motion value for each frame if greater than threshold. Helps fine tune the threshold value.")
+parser.add_argument('--frame_click', default=False, action=BooleanOptionalAction, help="Allows user to advance frames one by one by pressing any key. For use with testing mode on video files, not live streams, so make sure to provide a video file instead of an RTSP address for the --stream argument if using this feature.")
 args = vars(parser.parse_args())
 
 rtsp_stream = args["stream"]
@@ -33,7 +33,7 @@ monitor = args["monitor"]
 thresh = args["threshold"]
 start_frames = args["start_frames"]
 tail_length = args["tail_length"]
-no_auto_delete = args["no_auto_delete"]
+auto_delete = args["auto_delete"]
 testing = args["testing"]
 frame_click = args["frame_click"]
 if frame_click:
@@ -167,14 +167,14 @@ while loop:
                         ffmpeg_thread.join()
                         ffmpeg_copy = 0
                         print(filedate + " recording stopped")
-                        # delete recording if total length of recording is close to the tail_length value,
+                        # delete recording if total length is equal to the tail_length value,
                         # indicating a false positive
-                        if not no_auto_delete:
+                        if auto_delete:
                             recorded_file = cv2.VideoCapture(filename)
                             recorded_frames = recorded_file.get(cv2.CAP_PROP_FRAME_COUNT)
                             if recorded_frames < tail_length + (fps/2) and os.path.isfile(filename):
                                 os.remove(filename)
-                                print(filename + " was deleted")
+                                print(filename + " was auto-deleted")
                     else:
                         print(filedate + " recording stopped - Testing mode")
                     recording = False
