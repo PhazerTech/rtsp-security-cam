@@ -3,15 +3,23 @@ Python RTSP security camera app with motion detection features.  Lightweight and
 
 ## Getting Started
 
-To get started, you'll first need to clone the repository:
+To get started, first make sure your system has the required software. If using a Debian/Ubuntu based distro, you can install the required software with the following:
+
+```bash
+sudo apt update
+sudo apt install gcc python3-dev git
+```
+
+Next, clone this repository:
 
 ```bash
 git clone https://github.com/PhazerTech/rtsp-security-cam
 ```
 
-Next, install the required dependencies:
+Now install the required dependencies:
 
 ```bash
+cd rtsp-security-cam
 pip3 install -r requirements.txt
 ```
 
@@ -22,7 +30,6 @@ The only argument required to run the app is the --stream parameter followed by 
 To run it with default settings, enter the following and replace 'ip:port/stream-name' with your stream's address.
 
 ```bash
-cd rtsp-security-cam
 python3 rtsp-security-cam.py --stream rtsp://ip:port/stream-name
 ```
 
