@@ -40,6 +40,16 @@ Only use this if you have a monitor connected (no Raspberry Pi SSH sessions).
 python3 rtsp-security-cam.py --stream rtsp://ip:port/stream-name --monitor
 ```
 
+The program will print a message whenever it starts a recording and ends a recording, and also provide a timestamp.  It will create a folder with the current date for storing that day's recordings. A new folder will be created each day with the current date so that it can be left to run indefinitely.
+
+```bash
+$ python3 rtsp-security-cam.py --stream rtsp://192.168.0.156:8554/frontdoor
+13-05-09 recording started
+13-05-30 recording stopped
+14-01-01 recording started
+14-01-09 recording stopped
+```
+
 ## Advanced Settings
 
 If the default motion detection settings are providing poor results, additional arguments can be provided to tweak the sensitivity of the motion detection algorithm and to enable testing mode
