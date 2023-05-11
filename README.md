@@ -63,9 +63,9 @@ that helps to find the optimal threshold value.
 
 --auto_delete - Entering this argument enables the auto-delete feature. Recordings that have a total length equal to the tail_length value are assumed to be false positives and are auto-deleted.
 
---testing - Testing mode disables recordings and prints out the motion value for each frame if greater than threshold. Helps fine tune the threshold value.
+--testing - Testing mode disables recordings and prints out the motion value for each frame if greater than threshold. Helpful when fine tuning the threshold value.
 
---frame_click - Allows user to advance frames one by one by pressing any key. For use with testing mode on video files, not live streams, so make sure to provide a video file instead of an RTSP address for the --stream argument if using this feature.
+--frame_click - Allows the user to advance frames one by one by pressing any key. For use with testing mode on video files, not live streams, so make sure to provide a video file instead of an RTSP address for the --stream argument if using this feature.
 
 Check out my video about this app on my YouTube channel for more details: https://www.youtube.com/channel/phazertech
 
