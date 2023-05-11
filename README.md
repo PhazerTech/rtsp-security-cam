@@ -7,7 +7,7 @@ To get started, first make sure your system has the required software. If using 
 
 ```bash
 sudo apt update
-sudo apt install gcc python3-dev python3-pip git
+sudo apt install gcc python3-dev python3-pip git ffmpeg
 ```
 
 Next, clone this repository:
