@@ -25,7 +25,7 @@ pip3 install -r requirements.txt
 
 ## Running the App
 
-The only argument required to run the app is the --stream parameter followed by the RTSP address of your video stream.
+The only argument required to run the app is --stream followed by the RTSP address of your video stream.
 
 To run it with default settings, enter the following and replace 'ip:port/stream-name' with your stream's address.
 
@@ -33,7 +33,7 @@ To run it with default settings, enter the following and replace 'ip:port/stream
 python3 rtsp-security-cam.py --stream rtsp://ip:port/stream-name
 ```
 
-To open a window where you can view the stream while the program is running, include the --monitor parameter.
+To open a window where you can view the stream while the program is running, include the --monitor argument.
 Only use this if you have a monitor connected (no Raspberry Pi SSH sessions).
 
 ```bash
