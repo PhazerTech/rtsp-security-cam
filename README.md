@@ -1,5 +1,5 @@
 # rtsp-security-cam
-Python RTSP security camera app with motion detection features that are based on image processing instead of a dedicated sensor.  All that's required is a camera.  Lightweight and can run on a Raspberry Pi 4.
+Python RTSP security camera app with motion detection features that are based on image processing instead of a dedicated sensor.  All that's required is a camera.  Lightweight and can easily run on a Raspberry Pi 4.
 
 ## Getting Started
 
