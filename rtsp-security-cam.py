@@ -19,13 +19,13 @@ from sshkeyboard import listen_keyboard, stop_listening
 # Parse command line arguments
 parser = ArgumentParser(formatter_class=ArgumentDefaultsHelpFormatter)
 parser.add_argument("--stream", type=str, help="RTSP address of video stream.")
-parser.add_argument('--monitor', default=False, action=BooleanOptionalAction, help="View the live stream while program is running. If no monitor is connected then leave this disabled (no Raspberry Pi SSH sessions).")
-parser.add_argument("--threshold", default=350, type=int, choices=range(1,10000), help="Threshold value determines the amount of motion required to trigger a recording. Higher values decrease sensitivity to help reduce false positives. Default is 350. Max is 10000.")
-parser.add_argument("--start_frames", default=3, type=int, choices=range(1,30), help="The number of consecutive frames with motion activity required to start a recording. Raising this value might help if there's too many false positive recordings, especially when using a high frame rate stream greater than 30 FPS. Default is 3. Max is 30.")
-parser.add_argument("--tail_length", default=8, type=int, choices=range(1,30), help="The number of seconds without motion activity required to stop a recording. Raising this value might help if the recordings are stopping too early. Default is 8. Max is 30.")
-parser.add_argument("--auto_delete", default=False, action=BooleanOptionalAction, help="Entering this argument enables the auto-delete feature. Recordings that have a total length equal to the tail_length value are assumed to be false positives and are auto-deleted.")
+parser.add_argument('--monitor', default=False, action=BooleanOptionalAction, help="View the live stream. If no monitor is connected then leave this disabled (no Raspberry Pi SSH sessions).")
+parser.add_argument("--threshold", default=350, type=int, choices=range(1,10000), help="Determines the amount of motion required to start recording. Higher values decrease sensitivity to help reduce false positives. Default 350, max 10000.")
+parser.add_argument("--start_frames", default=3, type=int, choices=range(1,30), help="Number of consecutive frames with motion required to start recording. Raising this might help if there's too many false positive recordings, especially with a high frame rate stream of 60 FPS. Default 3, max 30.")
+parser.add_argument("--tail_length", default=8, type=int, choices=range(1,30), help="Number of seconds without motion required to stop recording. Raise this value if recordings are stopping too early. Default 8, max 30.")
+parser.add_argument("--auto_delete", default=False, action=BooleanOptionalAction, help="Enables auto-delete feature. Recordings that have total length equal to the tail_length value (seconds) are assumed to be false positives and are auto-deleted.")
 parser.add_argument('--testing', default=False, action=BooleanOptionalAction, help="Testing mode disables recordings and prints out the motion value for each frame if greater than threshold. Helps fine tune the threshold value.")
-parser.add_argument('--frame_click', default=False, action=BooleanOptionalAction, help="Allows user to advance frames one by one by pressing any key. For use with testing mode on video files, not live streams, so make sure to provide a video file instead of an RTSP address for the --stream argument if using this feature.")
+parser.add_argument('--frame_click', default=False, action=BooleanOptionalAction, help="Allows user to advance frames one by one by pressing any key. For use with testing mode on video files, not live streams, so set a video file instead of an RTSP address for the --stream argument.")
 args = vars(parser.parse_args())
 
 rtsp_stream = args["stream"]
@@ -38,12 +38,14 @@ testing = args["testing"]
 frame_click = args["frame_click"]
 if frame_click:
     testing = True
+    monitor = True
+    print("frame_click enabled. Press any key to advance the frame by one, or hold down the key to advance faster. Make sure the video window is selected, not the terminal, when advancing frames.")
 
 # set up other internal variables
 cap = cv2.VideoCapture(rtsp_stream)
 fps = cap.get(cv2.CAP_PROP_FPS)
 period = 1/fps
-tail_length = tail_length/period
+tail_length = tail_length*fps
 loop = True
 recording = False
 ffmpeg_copy = 0
@@ -114,10 +116,10 @@ while loop:
         if monitor:
             cv2.imshow('motion detection cam', img)
             if frame_click:
-                key = cv2.waitKey(0) & 0xFF
-                if key == ord("q"):
+                cv_key = cv2.waitKey(0) & 0xFF
+                if cv_key == ord("q"):
                     loop = False
-                if key == ord("n"):
+                if cv_key == ord("n"):
                     continue
             else:
                 if cv2.waitKey(1) & 0xFF == ord('q'):
