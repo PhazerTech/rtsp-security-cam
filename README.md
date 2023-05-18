@@ -50,7 +50,7 @@ $ python3 rtsp-security-cam.py --stream rtsp://192.168.0.156:8554/frontdoor
 14-01-09 recording stopped
 ```
 
-It will create a folder with the current date for storing that day's recordings. A new folder will be created each day with the current date so that it can be left to run indefinitely.
+It will create a folder with the current date for storing that day's recordings. A new folder will be created each day with the current date so that it can be left to run indefinitely. Press the 'Q' key to quit the program.
 
 ## Advanced Settings
 
