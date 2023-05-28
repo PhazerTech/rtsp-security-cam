@@ -66,10 +66,13 @@ if monitor:
 q = queue.Queue()
 # thread for receiving the stream's frames so they can be processed
 def receive_frames():
-    ret, frame = cap.read()
-    while ret and loop:
+    if cap.isOpened():
         ret, frame = cap.read()
-        q.put(frame)
+    while ret and loop:
+        if cap.isOpened():
+            ret, frame = cap.read()
+            if ret:
+                q.put(frame)
 
 # record the stream when motion is detected
 def start_ffmpeg():
