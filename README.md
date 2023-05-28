@@ -50,7 +50,7 @@ $ python3 rtsp-security-cam.py --stream rtsp://192.168.0.156:8554/frontdoor
 14-01-09 recording stopped
 ```
 
-It will create a folder with the current date for storing that day's recordings. A new folder will be created each day with the current date so that it can be left to run indefinitely.
+It will create a folder with the current date for storing that day's recordings. A new folder will be created each day with the current date so that it can be left to run indefinitely. Press the 'Q' key to quit the program.
 
 ## Advanced Settings
 
@@ -69,7 +69,7 @@ that helps to find the optimal threshold value.
 
 --frame_click - Allows the user to advance frames one by one by pressing any key. For use with testing mode on video files, not live streams, so make sure to provide a video file instead of an RTSP address for the --stream argument if using this feature.
 
-Check out my video about this app on my YouTube channel for more details: https://www.youtube.com/channel/phazertech
+Check out my video about this app on my YouTube channel for more details: https://youtu.be/hObJf4YADLQ
 
 ## Contact
 
