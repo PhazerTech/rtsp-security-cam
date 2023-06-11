@@ -115,19 +115,6 @@ while loop:
         if testing and ssim_val > thresh:
             print("motion: "+ str(ssim_val))
 
-        # monitor the stream
-        if monitor:
-            cv2.imshow('motion detection cam', img)
-            if frame_click:
-                cv_key = cv2.waitKey(0) & 0xFF
-                if cv_key == ord("q"):
-                    loop = False
-                if cv_key == ord("n"):
-                    continue
-            else:
-                if cv2.waitKey(1) & 0xFF == ord('q'):
-                    loop = False
-
         # count the number of frames where the ssim value exceeds the threshold value, and begin
         # recording if the number of frames exceeds start_frames value
         if not recording:
@@ -186,6 +173,19 @@ while loop:
                     activity_count = 0
             else:
                 activity_count = 0
+
+        # monitor the stream
+        if monitor:
+            cv2.imshow('motion detection cam', img)
+            if frame_click:
+                cv_key = cv2.waitKey(0) & 0xFF
+                if cv_key == ord("q"):
+                    loop = False
+                if cv_key == ord("n"):
+                    continue
+            else:
+                if cv2.waitKey(1) & 0xFF == ord('q'):
+                    loop = False
     else:
         time.sleep(period/2)
 
@@ -197,3 +197,4 @@ if ffmpeg_copy:
 receive_thread.join()
 keyboard_thread.join()
 cv2.destroyAllWindows()
+print("Exiting")
