@@ -1,6 +1,8 @@
 # rtsp-security-cam
 Python RTSP security camera app with motion detection features that are based on image processing instead of a dedicated sensor.  All that's required is a camera.  Lightweight and can easily run on a Raspberry Pi 4.
 
+I also made another version of this app with YOLO object detection that runs on a GPU. Check it out here: https://github.com/PhazerTech/yolo-rtsp-security-cam
+
 ## Getting Started
 
 To get started, first make sure your system has the required software. If using a Debian/Ubuntu based distro, you can install the required software with the following:
