@@ -2,7 +2,7 @@
 # All rights reserved.
 
 # View the GNU AFFERO license found in the
-# LICENSE file in the root directory of this source tree.
+# LICENSE file in the root directory.
 
 import time
 import os
