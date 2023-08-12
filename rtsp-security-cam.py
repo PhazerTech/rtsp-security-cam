@@ -73,9 +73,14 @@ def receive_frames():
             if ret:
                 q.put(frame)
 
-# record the stream when motion is detected
+# Record the stream when object is detected
 def start_ffmpeg():
-    ffmpeg_copy.execute()
+    try:
+        ffmpeg_copy.execute()
+    except:
+        print("Issue recording the stream. Trying again.")
+        time.sleep(1)
+        ffmpeg_copy.execute()
 
 # functions for detecting key presses
 def press(key):
